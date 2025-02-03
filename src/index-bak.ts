@@ -1,13 +1,11 @@
 #!/usr/bin/env node
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const wrapper_1 = require("./wrapper");
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
+
+import { ChordProParser, FormatterSettings, HtmlFormatter } from './wrapper';
+import fs from 'fs';
+import path from 'path';
+
 // Simplified CSS that works with HtmlFormatter's output
+// Claude AI generated
 const defaultStyles = `
 body {
     font-family: Arial, sans-serif;
@@ -23,6 +21,7 @@ body {
     white-space: pre-wrap;
 }
 
+// Lyrics line margin determines space to next chord
 .lyrics-line {
     position: relative;
     margin: 0.3em 0;
@@ -35,6 +34,7 @@ body {
     margin-right: 0.3em;
 }
 
+// Chord position relative to lyrics line
 .chord {
     position: absolute;
     top: -1.1em;
@@ -42,10 +42,10 @@ body {
     font-weight: bold;
 }
 
-/* .chorus-section {
-    margin-left: 2em;
-    font-style: italic;
-} */
+// .chorus-section {
+//     margin-left: 2em;
+//     font-style: italic;
+// }
 
 .title-metadata {
     font-size: 1.8em;
@@ -58,13 +58,14 @@ body {
     margin: 0.5em 0;
 }
 
-/* ---------------------------------- */
+// Based on the original CSS from chordproject-parser developer 
+// https://github.com/chordproject/chordproject-parser/blob/main/src/formatter/html.ts
 
-/* .lyrics-line {
-    display: flex;
-    align-items: flex-end;
-    flex-wrap: wrap;
-} */
+// .lyrics-line {
+//     display: flex;
+//     align-items: flex-end;
+//     flex-wrap: wrap;
+// }
 
 .chord-lyrics {
     display: flex;
@@ -76,24 +77,24 @@ body {
     padding-right: 0.3em;
 }
 
-/* .chord {
-    font-weight: bold;
-} */
+// .chord {
+//     font-weight: bold;
+// }
 
 .chord-lyrics:last-child .chord {
     padding-right: 0;
 }
 
-/* .word {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    margin-right: 0.33em;
-} */
+// .word {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: flex-end;
+//     margin-right: 0.33em;
+// }
 
-/* .empty-line {
-    margin-top: 1.5em;
-} */
+// .empty-line {
+//     margin-top: 1.5em;
+// }
 
 .chorus-section {
     font-weight: bold;
@@ -105,6 +106,11 @@ body {
     font-family: monospace;
 }
 
+
+// Based on the CSS from 
+// https://github.com/tragram/domcikuv-zpevnik-v2/blob/4ec332fb7137c85cff47173ae20aa0061617374f/src/routes/SongView/SongView.css 
+
+
 /* ### actual song ### */
 /* chorus settings */
 .chorus {
@@ -114,25 +120,25 @@ body {
 .chorus-section {
     font-weight: bold;
     border-left: solid 3px;
-    border-color: hsl(var(--primary));
+    //border-color: hsl(var(--primary));
     padding-left: 1em;
 }
 
 /* chord settings */
 
-.above-lyrics {
-    /* padding-right: 0.3em; */
-}
+// .above-lyrics {
+//     /* padding-right: 0.3em; */
+// }
 
-/* .chord {
-    color: hsl(var(--primary));
-    font-weight: 800;
-    /* text-shadow: 1px 1px 2px #000000; */
-} */
+// .chord {
+//     color: hsl(var(--primary));
+//     font-weight: 800;
+//     /* text-shadow: 1px 1px 2px #000000; */
+// }
 
-.repeated-chords-hidden .repeated-chords .chord {
-    display: none;
-}
+// .repeated-chords-hidden .repeated-chords .chord {
+//     display: none;
+// }
 
 .chord:empty {
     /* hide rows without chords */
@@ -313,9 +319,9 @@ body {
     top: 0.5em;
 }
 
-.chord sup {
-    /* margin-right: -0.1em; */
-}
+// .chord sup {
+//     /* margin-right: -0.1em; */
+// }
 
 .empty-line {
     height: 0.75em;
@@ -335,17 +341,23 @@ body {
     display: block;
 }
 `;
-function generateHTML(songContent, title) {
-    const parser = new wrapper_1.ChordProParser();
-    const settings = new wrapper_1.FormatterSettings();
+
+function generateHTML(songContent: string, title: string): string {
+    const parser = new ChordProParser();
+    const settings = new FormatterSettings();
     settings.showMetadata = true;
-    const formatter = new wrapper_1.HtmlFormatter(settings);
+    
+    const formatter = new HtmlFormatter(settings);
+    
     try {
         const song = parser.parse(songContent);
         const formattedOutput = formatter.format(song);
+        
         //console.log('Debug: Unmodified HtmlFormatter output:', formattedOutput);
+
         // Join without newlines to avoid unwanted line breaks in the rendered HTML.
         const formattedContent = formattedOutput.join('');
+        
         return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -360,12 +372,12 @@ function generateHTML(songContent, title) {
     ${formattedContent}
 </body>
 </html>`;
-    }
-    catch (error) {
+    } catch (error) {
         console.error('Error parsing ChordPro file:', error);
         process.exit(1);
     }
 }
+
 function main() {
     // Check arguments
     if (process.argv.length < 3) {
@@ -377,31 +389,35 @@ function main() {
         console.log('              If not specified, will use input filename with .html extension');
         process.exit(1);
     }
+
     const inputFile = process.argv[2];
     let outputFile = process.argv[3];
+
     if (!outputFile) {
-        outputFile = path_1.default.join(path_1.default.dirname(inputFile), path_1.default.basename(inputFile, path_1.default.extname(inputFile)) + '.html');
+        outputFile = path.join(
+            path.dirname(inputFile),
+            path.basename(inputFile, path.extname(inputFile)) + '.html'
+        );
     }
+
     try {
-        const songContent = fs_1.default.readFileSync(inputFile, 'utf-8');
-        const title = path_1.default.basename(inputFile, path_1.default.extname(inputFile));
+        const songContent = fs.readFileSync(inputFile, 'utf-8');
+        const title = path.basename(inputFile, path.extname(inputFile));
         const htmlContent = generateHTML(songContent, title);
-        fs_1.default.writeFileSync(outputFile, htmlContent, 'utf-8');
+        fs.writeFileSync(outputFile, htmlContent, 'utf-8');
         console.log(`Successfully converted ${inputFile} to ${outputFile}`);
-    }
-    catch (error) {
+    } catch (error: unknown) {
         if (error instanceof Error) {
             if ('code' in error && error.code === 'ENOENT') {
                 console.error(`Error: Input file '${inputFile}' not found`);
-            }
-            else {
+            } else {
                 console.error('Error:', error.message);
             }
-        }
-        else {
+        } else {
             console.error('An unknown error occurred');
         }
         process.exit(1);
     }
 }
+
 main();

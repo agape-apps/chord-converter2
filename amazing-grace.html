@@ -22,7 +22,7 @@ body {
 
 .lyrics-line {
     position: relative;
-    margin: 1.5em 0;
+    margin: 0.3em 0;
     min-height: 2em;
 }
 
@@ -34,15 +34,15 @@ body {
 
 .chord {
     position: absolute;
-    top: -1.5em;
+    top: -1.1em;
     color: #2040E0;
     font-weight: bold;
 }
 
-.chorus-section {
+/* .chorus-section {
     margin-left: 2em;
     font-style: italic;
-}
+} */
 
 .title-metadata {
     font-size: 1.8em;
@@ -55,226 +55,286 @@ body {
     margin: 0.5em 0;
 }
 
+/* ---------------------------------- */
+
+/* .lyrics-line {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+} */
+
+.chord-lyrics {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.above-lyrics {
+    padding-right: 0.3em;
+}
+
+/* .chord {
+    font-weight: bold;
+} */
+
+.chord-lyrics:last-child .chord {
+    padding-right: 0;
+}
+
+/* .word {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-right: 0.33em;
+} */
+
+/* .empty-line {
+    margin-top: 1.5em;
+} */
+
+.chorus-section {
+    font-weight: bold;
+    border-left: 2px black solid;
+    padding-left: 1em;
+}
+
+.tab-section {
+    font-family: monospace;
+}
+
+/* ### actual song ### */
+/* chorus settings */
+.chorus {
+    font-weight: 700;
+}
+
+.chorus-section {
+    font-weight: bold;
+    border-left: solid 3px;
+    border-color: hsl(var(--primary));
+    padding-left: 1em;
+}
+
+/* chord settings */
+
+.above-lyrics {
+    /* padding-right: 0.3em; */
+}
+
+/* .chord {
+    color: hsl(var(--primary));
+    font-weight: 800;
+    /* text-shadow: 1px 1px 2px #000000; */
+} */
+
+.repeated-chords-hidden .repeated-chords .chord {
+    display: none;
+}
+
+.chord:empty {
+    /* hide rows without chords */
+    display: none;
+}
+
+.chords-hidden .chord {
+    display: none;
+}
+
+.chords-hidden .tab-section {
+    display: none;
+}
+
+.chord-lyrics {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.force-shown {
+    display: inline !important;
+}
+
+.chords-hidden .force-shown {
+    display: none !important;
+}
+
+/* chords-inline mode */
+.chords-inline .chord-lyrics {
+    flex-direction: row;
+}
+
+.chords-inline .chord {
+    margin-bottom: 0.5em;
+    font-size: 1em;
+}
+
+.chords-inline .lyrics {
+    align-content: end;
+}
+
+
+/* layout */
+#auto-text-size-wrapper>div {
+    justify-content: safe center;
+    /* Allows vertical scrolling but blocks zoom */
+    /* touch-action: pan-y; */
+    max-width: 100%;
+    font-weight: 600;
+}
+
+#actual-contents {
+    max-width: 100%;
+}
+
+.comment-line {
+    line-height: normal;
+}
+
+.song-content {
+    line-height: 1.1;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+}
+
+.song-content>.section+.section {
+    margin-top: 1.5em;
+}
+
+/* Remove margin-top when chords are hidden */
+.chords-hidden .song-content>.section:not(.tab-section)+.tab-section,
+.chords-hidden .song-content>.tab-section+.section {
+    margin-top: 0;
+}
+
+/* Restore margin when sections aren't adjacent and there's a hidden section between */
+.chords-hidden .song-content>.section:not(.tab-section)~.section:not(.tab-section) {
+    margin-top: 1.5em;
+}
+
+.song-content>.comment-line {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-style: italic;
+    color: hsl(var(--primary));
+    opacity: 80%;
+}
+
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+    break-inside: avoid-column;
+    width: fit-content;
+    /* width: fit-content;*/
+    max-width: 100%; 
+}
+
+.lyrics-line {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+    max-width: 100%;
+}
+
+.fit-screen-none .lyrics-line {
+    flex-wrap: wrap;
+}
+
+
+.section-title {
+    display: none;
+}
+
+.word {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-right: 0.33em;
+    /*border: 1px solid red;*/
+}
+
+/* this class is added when user toggles the two-column layout */
+.song-content-columns>* {
+    columns: 2;
+    @apply gap-4 sm:gap-8 lg:gap-16;
+}
+
+/* misc */
+.song-content .literal, .song-content .tab-section {
+    color: hsl(var("--text-foreground"));
+    font-family: monospace;
+    font-size: 0.9em;
+    scrollbar-width: none;
+}
+
+.repetition-count {
+    color:hsl(var(--primary));
+    /* font-size: 0.8em; */
+}
+
+.repetition-count + .word{
+    color:hsl(var(--primary));
+    /* font-size: 0.8em; */
+}
+
+.section-title + .lyrics-line>.word:first-child {
+    color: hsl(var(--primary));
+    /* font-size: 0.8em; */
+}
+
+/* autosizing of tabs and comments */
+#dummy-contents .comment-line, #dummy-contents .tab-section {
+    width: 0;
+}
+
+.comment-line, .tab-section {
+    overflow-x: auto;
+    overflow-y: clip;
+    max-width: 100%;
+
+}
+
+/* make subscript appear under superscript */
+.sub-sup-container {
+    /* display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle; */
+    position: relative;
+}
+
+.sub-sup-container sup+sub {
+    margin-left: -0.6em;
+    top: 0.5em;
+}
+
+.chord sup {
+    /* margin-right: -0.1em; */
+}
+
+.empty-line {
+    height: 0.75em;
+}
+
+.empty-line+.empty-line {
+    display: none;
+}
+
+.repetition {
+    color: hsl(var(--primary));
+    /* font-size:larger; */
+    font-weight: 100;
+}
+
+.fullscreen #inner-background-image {
+    display: block;
+}
+
     </style>
 </head>
 <body>
-    <div class=song-metadata>
-<h1 class="metadata title-metadata">Amazing Grace</h1>
-<h2 class="metadata subtitle-metadata">Traditional</h2>
-</div>
-<div class=song-content>
-<div class="line empty-line"></div>
-<div class="lyrics-line">
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-G
-</span>
-<span class="lyrics">
-Amazing
-</span>
-</div>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-D
-</span>
-<span class="lyrics">
-grace
-</span>
-</div>
-</div>
-<div class="word">
-<span class="lyrics">
-how
-</span>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-G
-</span>
-<span class="lyrics">
-sweet
-</span>
-</div>
-</div>
-<div class="word">
-<span class="lyrics">
-the
-</span>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-D
-</span>
-<span class="lyrics">
-sound
-</span>
-</div>
-</div>
-</div>
-<div class="lyrics-line">
-<div class="word">
-<span class="lyrics">
-That
-</span>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-G
-</span>
-<span class="lyrics">
-saved
-</span>
-</div>
-</div>
-<div class="word">
-<span class="lyrics">
-a
-</span>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-D
-</span>
-<span class="lyrics">
-wretch
-</span>
-</div>
-</div>
-<div class="word">
-<span class="lyrics">
-like
-</span>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-G
-</span>
-<span class="lyrics">
-me
-</span>
-</div>
-</div>
-</div>
-<div class="line empty-line"></div>
-<div class="section chorus-section">
-<div class="lyrics-line">
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-G
-</span>
-<span class="lyrics">
-I
-</span>
-</div>
-</div>
-<div class="word">
-<span class="lyrics">
-once
-</span>
-</div>
-<div class="word">
-<span class="lyrics">
-was
-</span>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-D
-</span>
-<span class="lyrics">
-lost
-</span>
-</div>
-</div>
-<div class="word">
-<span class="lyrics">
-but
-</span>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-G
-</span>
-<span class="lyrics">
-now
-</span>
-</div>
-</div>
-<div class="word">
-<span class="lyrics">
-I'm
-</span>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-D
-</span>
-<span class="lyrics">
-found
-</span>
-</div>
-</div>
-</div>
-<div class="lyrics-line">
-<div class="word">
-<span class="lyrics">
-Was
-</span>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-G
-</span>
-<span class="lyrics">
-blind
-</span>
-</div>
-</div>
-<div class="word">
-<span class="lyrics">
-but
-</span>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-D
-</span>
-<span class="lyrics">
-now
-</span>
-</div>
-</div>
-<div class="word">
-<span class="lyrics">
-I
-</span>
-</div>
-<div class="word">
-<div class="chord-lyrics">
-<span class="above-lyrics chord">
-G
-</span>
-<span class="lyrics">
-see
-</span>
-</div>
-</div>
-</div>
-</div>
-</div>
+    <div class=song-metadata><h1 class="metadata title-metadata">Amazing Grace</h1><h2 class="metadata subtitle-metadata">Traditional</h2></div><div class=song-content><div class="line empty-line"></div><div class="lyrics-line"><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">G</span><span class="lyrics">Amazing</span></div></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">D</span><span class="lyrics">grace</span></div></div><div class="word"><span class="lyrics">how</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">G</span><span class="lyrics">sweet</span></div></div><div class="word"><span class="lyrics">the</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">D</span><span class="lyrics">sound</span></div></div></div><div class="lyrics-line"><div class="word"><span class="lyrics">That</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">G</span><span class="lyrics">saved</span></div></div><div class="word"><span class="lyrics">a</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">D</span><span class="lyrics">wretch</span></div></div><div class="word"><span class="lyrics">like</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">G</span><span class="lyrics">me</span></div></div></div><div class="lyrics-line"><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">G</span><span class="lyrics">I</span></div></div><div class="word"><span class="lyrics">once</span></div><div class="word"><span class="lyrics">was</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">D</span><span class="lyrics">lost</span></div></div><div class="word"><span class="lyrics">but</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">G</span><span class="lyrics">now</span></div></div><div class="word"><span class="lyrics">I'm</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">D</span><span class="lyrics">found</span></div></div></div><div class="lyrics-line"><div class="word"><span class="lyrics">Was</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">G</span><span class="lyrics">blind</span></div></div><div class="word"><span class="lyrics">but</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">D</span><span class="lyrics">now</span></div></div><div class="word"><span class="lyrics">I</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">G</span><span class="lyrics">see</span></div></div></div></div>
 </body>
 </html>

@@ -8,6 +8,7 @@ const wrapper_1 = require("./wrapper");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 // Simplified CSS that works with HtmlFormatter's output
+// Claude AI generated
 const defaultStyles = `
 body {
     font-family: Arial, sans-serif;
@@ -23,6 +24,7 @@ body {
     white-space: pre-wrap;
 }
 
+// Lyrics line margin determines space to next chord
 .lyrics-line {
     position: relative;
     margin: 0.3em 0;
@@ -35,6 +37,7 @@ body {
     margin-right: 0.3em;
 }
 
+// Chord position relative to lyrics line
 .chord {
     position: absolute;
     top: -1.1em;
@@ -42,10 +45,10 @@ body {
     font-weight: bold;
 }
 
-/* .chorus-section {
-    margin-left: 2em;
-    font-style: italic;
-} */
+// .chorus-section {
+//     margin-left: 2em;
+//     font-style: italic;
+// }
 
 .title-metadata {
     font-size: 1.8em;
@@ -58,13 +61,14 @@ body {
     margin: 0.5em 0;
 }
 
-/* ---------------------------------- */
+// Based on the original CSS from chordproject-parser developer 
+// https://github.com/chordproject/chordproject-parser/blob/main/src/formatter/html.ts
 
-/* .lyrics-line {
-    display: flex;
-    align-items: flex-end;
-    flex-wrap: wrap;
-} */
+// .lyrics-line {
+//     display: flex;
+//     align-items: flex-end;
+//     flex-wrap: wrap;
+// }
 
 .chord-lyrics {
     display: flex;
@@ -76,24 +80,24 @@ body {
     padding-right: 0.3em;
 }
 
-/* .chord {
-    font-weight: bold;
-} */
+// .chord {
+//     font-weight: bold;
+// }
 
 .chord-lyrics:last-child .chord {
     padding-right: 0;
 }
 
-/* .word {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    margin-right: 0.33em;
-} */
+// .word {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: flex-end;
+//     margin-right: 0.33em;
+// }
 
-/* .empty-line {
-    margin-top: 1.5em;
-} */
+// .empty-line {
+//     margin-top: 1.5em;
+// }
 
 .chorus-section {
     font-weight: bold;
@@ -105,6 +109,11 @@ body {
     font-family: monospace;
 }
 
+
+// Based on the CSS from 
+// https://github.com/tragram/domcikuv-zpevnik-v2/blob/4ec332fb7137c85cff47173ae20aa0061617374f/src/routes/SongView/SongView.css 
+
+
 /* ### actual song ### */
 /* chorus settings */
 .chorus {
@@ -114,25 +123,25 @@ body {
 .chorus-section {
     font-weight: bold;
     border-left: solid 3px;
-    border-color: hsl(var(--primary));
+    //border-color: hsl(var(--primary));
     padding-left: 1em;
 }
 
 /* chord settings */
 
-.above-lyrics {
-    /* padding-right: 0.3em; */
-}
+// .above-lyrics {
+//     /* padding-right: 0.3em; */
+// }
 
-/* .chord {
-    color: hsl(var(--primary));
-    font-weight: 800;
-    /* text-shadow: 1px 1px 2px #000000; */
-} */
+// .chord {
+//     color: hsl(var(--primary));
+//     font-weight: 800;
+//     /* text-shadow: 1px 1px 2px #000000; */
+// }
 
-.repeated-chords-hidden .repeated-chords .chord {
-    display: none;
-}
+// .repeated-chords-hidden .repeated-chords .chord {
+//     display: none;
+// }
 
 .chord:empty {
     /* hide rows without chords */
@@ -313,9 +322,9 @@ body {
     top: 0.5em;
 }
 
-.chord sup {
-    /* margin-right: -0.1em; */
-}
+// .chord sup {
+//     /* margin-right: -0.1em; */
+// }
 
 .empty-line {
     height: 0.75em;

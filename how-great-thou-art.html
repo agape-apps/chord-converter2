@@ -1,14 +1,11 @@
-#!/usr/bin/env node
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const wrapper_1 = require("./wrapper");
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
-// Simplified CSS that works with HtmlFormatter's output
-const defaultStyles = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>how-great-thou-art</title>
+    <style>
+        
 body {
     font-family: Arial, sans-serif;
     margin: 2em;
@@ -25,7 +22,7 @@ body {
 
 .lyrics-line {
     position: relative;
-    margin: 0.3em 0;
+    margin: 1.5em 0;
     min-height: 2em;
 }
 
@@ -37,15 +34,15 @@ body {
 
 .chord {
     position: absolute;
-    top: -1.1em;
+    top: -1.5em;
     color: #2040E0;
     font-weight: bold;
 }
 
-/* .chorus-section {
-    margin-left: 2em;
-    font-style: italic;
-} */
+// .chorus-section {
+//     margin-left: 2em;
+//     font-style: italic;
+// }
 
 .title-metadata {
     font-size: 1.8em;
@@ -58,13 +55,13 @@ body {
     margin: 0.5em 0;
 }
 
-/* ---------------------------------- */
+//---
 
-/* .lyrics-line {
-    display: flex;
-    align-items: flex-end;
-    flex-wrap: wrap;
-} */
+// .lyrics-line {
+//     display: flex;
+//     align-items: flex-end;
+//     flex-wrap: wrap;
+// }
 
 .chord-lyrics {
     display: flex;
@@ -76,24 +73,24 @@ body {
     padding-right: 0.3em;
 }
 
-/* .chord {
-    font-weight: bold;
-} */
+// .chord {
+//     font-weight: bold;
+// }
 
 .chord-lyrics:last-child .chord {
     padding-right: 0;
 }
 
-/* .word {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    margin-right: 0.33em;
-} */
+// .word {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: flex-end;
+//     margin-right: 0.33em;
+// }
 
-/* .empty-line {
+.empty-line {
     margin-top: 1.5em;
-} */
+}
 
 .chorus-section {
     font-weight: bold;
@@ -104,6 +101,10 @@ body {
 .tab-section {
     font-family: monospace;
 }
+
+
+//---
+
 
 /* ### actual song ### */
 /* chorus settings */
@@ -124,11 +125,11 @@ body {
     /* padding-right: 0.3em; */
 }
 
-/* .chord {
+.chord {
     color: hsl(var(--primary));
     font-weight: 800;
     /* text-shadow: 1px 1px 2px #000000; */
-} */
+}
 
 .repeated-chords-hidden .repeated-chords .chord {
     display: none;
@@ -334,74 +335,10 @@ body {
 .fullscreen #inner-background-image {
     display: block;
 }
-`;
-function generateHTML(songContent, title) {
-    const parser = new wrapper_1.ChordProParser();
-    const settings = new wrapper_1.FormatterSettings();
-    settings.showMetadata = true;
-    const formatter = new wrapper_1.HtmlFormatter(settings);
-    try {
-        const song = parser.parse(songContent);
-        const formattedOutput = formatter.format(song);
-        //console.log('Debug: Unmodified HtmlFormatter output:', formattedOutput);
-        // Join without newlines to avoid unwanted line breaks in the rendered HTML.
-        const formattedContent = formattedOutput.join('');
-        return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${title}</title>
-    <style>
-        ${defaultStyles}
+
     </style>
 </head>
 <body>
-    ${formattedContent}
+    <div class=song-metadata></div><div class=song-content><div class="lyrics-line"><div class="word"><span class="lyrics">title:</span></div><div class="word"><span class="lyrics">"How</span></div><div class="word"><span class="lyrics">Great</span></div><div class="word"><span class="lyrics">Thou</span></div><div class="word"><span class="lyrics">Art"</span></div></div><div class="lyrics-line"><div class="word"><span class="lyrics">artist:</span></div><div class="word"><span class="lyrics">"Carl</span></div><div class="word"><span class="lyrics">Boberg"</span></div></div><div class="lyrics-line"><div class="word"><span class="lyrics">key:</span></div><div class="word"><span class="lyrics">"A"</span></div></div><div class="line empty-line"></div><div class="lyrics-line"><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">A</span><span class="lyrics">O</span></div></div><div class="word"><span class="lyrics">Lord</span></div><div class="word"><span class="lyrics">my</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">D</span><span class="lyrics">God,</span></div></div><div class="word"><span class="lyrics">when</span></div><div class="word"><span class="lyrics">I</span></div><div class="word"><span class="lyrics">in</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">A</span><span class="lyrics">awesome</span></div></div><div class="word"><span class="lyrics">wonder</span></div></div><div class="lyrics-line"><div class="word"><span class="lyrics">Con</span><div class="chord-lyrics"><span class="above-lyrics chord">A</span><span class="lyrics">sider</span></div></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">D</span><span class="lyrics">all</span></div></div><div class="word"><span class="lyrics">the</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">E</span><span class="lyrics">worlds</span></div></div><div class="word"><span class="lyrics">Thy</span></div><div class="word"><span class="lyrics">hands</span></div><div class="word"><span class="lyrics">have</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">A</span><span class="lyrics">made</span></div></div></div><div class="lyrics-line"><div class="word"><span class="lyrics">I</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">A</span><span class="lyrics">see</span></div></div><div class="word"><span class="lyrics">the</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">D</span><span class="lyrics">stars,</span></div></div><div class="word"><span class="lyrics">I</span></div><div class="word"><span class="lyrics">hear</span></div><div class="word"><span class="lyrics">the</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">A</span><span class="lyrics">rolling</span></div></div><div class="word"><span class="lyrics">thunder</span></div></div><div class="lyrics-line"><div class="word"><span class="lyrics">Thy</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">A</span><span class="lyrics">power</span></div></div><div class="word"><span class="lyrics">through</span><div class="chord-lyrics"><span class="above-lyrics chord">D</span><span class="lyrics">out</span></div></div><div class="word"><span class="lyrics">the</span></div><div class="word"><div class="chord-lyrics"><span class="above-lyrics chord">E</span><span class="lyrics">universe</span></div></div><div class="word"><span class="lyrics">dis</span><div class="chord-lyrics"><span class="above-lyrics chord">A</span><span class="lyrics">played</span></div></div></div></div>
 </body>
-</html>`;
-    }
-    catch (error) {
-        console.error('Error parsing ChordPro file:', error);
-        process.exit(1);
-    }
-}
-function main() {
-    // Check arguments
-    if (process.argv.length < 3) {
-        console.log('Usage: chordpro-to-html <input-file> [output-file]');
-        console.log('Converts a ChordPro formatted text file to HTML');
-        console.log('\nOptions:');
-        console.log('  input-file   Path to the input ChordPro file');
-        console.log('  output-file  Path to the output HTML file (optional)');
-        console.log('              If not specified, will use input filename with .html extension');
-        process.exit(1);
-    }
-    const inputFile = process.argv[2];
-    let outputFile = process.argv[3];
-    if (!outputFile) {
-        outputFile = path_1.default.join(path_1.default.dirname(inputFile), path_1.default.basename(inputFile, path_1.default.extname(inputFile)) + '.html');
-    }
-    try {
-        const songContent = fs_1.default.readFileSync(inputFile, 'utf-8');
-        const title = path_1.default.basename(inputFile, path_1.default.extname(inputFile));
-        const htmlContent = generateHTML(songContent, title);
-        fs_1.default.writeFileSync(outputFile, htmlContent, 'utf-8');
-        console.log(`Successfully converted ${inputFile} to ${outputFile}`);
-    }
-    catch (error) {
-        if (error instanceof Error) {
-            if ('code' in error && error.code === 'ENOENT') {
-                console.error(`Error: Input file '${inputFile}' not found`);
-            }
-            else {
-                console.error('Error:', error.message);
-            }
-        }
-        else {
-            console.error('An unknown error occurred');
-        }
-        process.exit(1);
-    }
-}
-main();
+</html>

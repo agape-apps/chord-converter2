@@ -1,4 +1,4 @@
-Using the suggested input text:
+Using the input text:
 
 {title: Amazing Grace}
 {subtitle: Traditional}
@@ -7,7 +7,7 @@ That [G]saved a [D]wretch like [G]me
 [G]I once was [D]lost but [G]now I'm [D]found
 Was [G]blind but [D]now I [G]see
 
-Using the suggested input text from Amazing Grace, the output is still showing one word on one line at a time.
+the output is showing only one word on one line at a time.
 
 To help with debugging please add a debugging mode, where the unmodified output of the `HtmlFormatter` will be printed to the console. 
 
