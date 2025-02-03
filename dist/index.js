@@ -42,11 +42,6 @@ body {
     font-weight: bold;
 }
 
-/* .chorus-section {
-    margin-left: 2em;
-    font-style: italic;
-} */
-
 .title-metadata {
     font-size: 1.8em;
     margin: 0.5em 0;
@@ -58,14 +53,6 @@ body {
     margin: 0.5em 0;
 }
 
-/* ---------------------------------- */
-
-/* .lyrics-line {
-    display: flex;
-    align-items: flex-end;
-    flex-wrap: wrap;
-} */
-
 .chord-lyrics {
     display: flex;
     flex-direction: column;
@@ -75,25 +62,6 @@ body {
 .above-lyrics {
     padding-right: 0.3em;
 }
-
-/* .chord {
-    font-weight: bold;
-} */
-
-.chord-lyrics:last-child .chord {
-    padding-right: 0;
-}
-
-/* .word {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    margin-right: 0.33em;
-} */
-
-/* .empty-line {
-    margin-top: 1.5em;
-} */
 
 .chorus-section {
     font-weight: bold;
@@ -105,8 +73,6 @@ body {
     font-family: monospace;
 }
 
-/* ### actual song ### */
-/* chorus settings */
 .chorus {
     font-weight: 700;
 }
@@ -118,24 +84,11 @@ body {
     padding-left: 1em;
 }
 
-/* chord settings */
-
-.above-lyrics {
-    /* padding-right: 0.3em; */
-}
-
-/* .chord {
-    color: hsl(var(--primary));
-    font-weight: 800;
-    /* text-shadow: 1px 1px 2px #000000; */
-} */
-
 .repeated-chords-hidden .repeated-chords .chord {
     display: none;
 }
 
 .chord:empty {
-    /* hide rows without chords */
     display: none;
 }
 
@@ -161,7 +114,6 @@ body {
     display: none !important;
 }
 
-/* chords-inline mode */
 .chords-inline .chord-lyrics {
     flex-direction: row;
 }
@@ -175,19 +127,7 @@ body {
     align-content: end;
 }
 
-
-/* layout */
-#auto-text-size-wrapper>div {
-    justify-content: safe center;
-    /* Allows vertical scrolling but blocks zoom */
-    /* touch-action: pan-y; */
-    max-width: 100%;
-    font-weight: 600;
-}
-
-#actual-contents {
-    max-width: 100%;
-}
+/* Removed unused layout rules for #auto-text-size-wrapper and #actual-contents */
 
 .comment-line {
     line-height: normal;
@@ -200,22 +140,20 @@ body {
     flex-direction: column;
 }
 
-.song-content>.section+.section {
+.song-content > .section + .section {
     margin-top: 1.5em;
 }
 
-/* Remove margin-top when chords are hidden */
-.chords-hidden .song-content>.section:not(.tab-section)+.tab-section,
-.chords-hidden .song-content>.tab-section+.section {
+.chords-hidden .song-content > .section:not(.tab-section) + .tab-section,
+.chords-hidden .song-content > .tab-section + .section {
     margin-top: 0;
 }
 
-/* Restore margin when sections aren't adjacent and there's a hidden section between */
-.chords-hidden .song-content>.section:not(.tab-section)~.section:not(.tab-section) {
+.chords-hidden .song-content > .section:not(.tab-section) ~ .section:not(.tab-section) {
     margin-top: 1.5em;
 }
 
-.song-content>.comment-line {
+.song-content > .comment-line {
     margin-top: 1em;
     margin-bottom: 1em;
     font-style: italic;
@@ -223,14 +161,12 @@ body {
     opacity: 80%;
 }
 
-
 .section {
     display: flex;
     flex-direction: column;
     gap: 0.1em;
     break-inside: avoid-column;
     width: fit-content;
-    /* width: fit-content;*/
     max-width: 100%; 
 }
 
@@ -241,31 +177,17 @@ body {
     max-width: 100%;
 }
 
-.fit-screen-none .lyrics-line {
-    flex-wrap: wrap;
-}
-
-
-.section-title {
-    display: none;
-}
-
 .word {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
     margin-right: 0.33em;
-    /*border: 1px solid red;*/
 }
 
-/* this class is added when user toggles the two-column layout */
-.song-content-columns>* {
-    columns: 2;
-    @apply gap-4 sm:gap-8 lg:gap-16;
-}
+/* Removed unused rule: .song-content-columns > * */
 
-/* misc */
-.song-content .literal, .song-content .tab-section {
+.song-content .literal,
+.song-content .tab-section {
     color: hsl(var("--text-foreground"));
     font-family: monospace;
     font-size: 0.9em;
@@ -273,67 +195,43 @@ body {
 }
 
 .repetition-count {
-    color:hsl(var(--primary));
-    /* font-size: 0.8em; */
-}
-
-.repetition-count + .word{
-    color:hsl(var(--primary));
-    /* font-size: 0.8em; */
-}
-
-.section-title + .lyrics-line>.word:first-child {
     color: hsl(var(--primary));
-    /* font-size: 0.8em; */
 }
 
-/* autosizing of tabs and comments */
-#dummy-contents .comment-line, #dummy-contents .tab-section {
-    width: 0;
+.repetition-count + .word {
+    color: hsl(var(--primary));
 }
 
-.comment-line, .tab-section {
+/* Removed unused rule: .section-title + .lyrics-line > .word:first-child */
+
+/* Autosizing of tabs and comments */
+.comment-line,
+.tab-section {
     overflow-x: auto;
     overflow-y: clip;
     max-width: 100%;
-
 }
 
-/* make subscript appear under superscript */
-.sub-sup-container {
-    /* display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    vertical-align: middle; */
-    position: relative;
-}
+/* Removed unused rule: #dummy-contents .comment-line, #dummy-contents .tab-section */
 
-.sub-sup-container sup+sub {
-    margin-left: -0.6em;
-    top: 0.5em;
-}
-
-.chord sup {
-    /* margin-right: -0.1em; */
-}
+/* Removed unused sub‑sup container rules */
+ 
+/* Removed empty .chord sup rule */
 
 .empty-line {
     height: 0.75em;
 }
 
-.empty-line+.empty-line {
+.empty-line + .empty-line {
     display: none;
 }
 
 .repetition {
     color: hsl(var(--primary));
-    /* font-size:larger; */
     font-weight: 100;
 }
 
-.fullscreen #inner-background-image {
-    display: block;
-}
+/* Removed unused rule: .fullscreen #inner-background-image */
 `;
 function generateHTML(songContent, title) {
     const parser = new wrapper_1.ChordProParser();
