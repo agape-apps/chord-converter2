@@ -1,0 +1,18 @@
+Using the suggested input text:
+
+{title: Amazing Grace}
+{subtitle: Traditional}
+[G]Amazing [D]grace how [G]sweet the [D]sound
+That [G]saved a [D]wretch like [G]me
+[G]I once was [D]lost but [G]now I'm [D]found
+Was [G]blind but [D]now I [G]see
+
+Using the suggested input text from Amazing Grace, the output is still showing one word on one line at a time.
+
+To help with debugging please add a debugging mode, where the unmodified output of the `HtmlFormatter` will be printed to the console. 
+
+I suspect that adding a new line is part of the problem:
+`const formattedContent = formatter.format(song).join('\n');`
+
+The previously attached file songRendering.ts may also give some clues about the proper usage of `HtmlFormatter`. 
+

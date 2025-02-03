@@ -1,0 +1,23 @@
+{
+  "name": "chordpro-converter2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "chordproject-parser": "^0.2.14"
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "^16.8.1",
+    "@types/node": "^22.13.0",
+    "typescript": "^5.7.3"
+  }
+}
